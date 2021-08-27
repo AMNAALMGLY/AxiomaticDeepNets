@@ -19,7 +19,7 @@ def visualize(baseline, image,grads, IG,cat,fname,cmap='PiYG',alpha=0.4):
   cmap_bound=np.abs(IG).max()
   img=transforms.ToPILImage()(IG)
   grads=transforms.ToPILImage()(grads)
-  fig,axes= plt.subplots(nrows=2, ncols=3, figsize=(10, 10))
+  fig,axes= plt.subplots(nrows=2, ncols=3, figsize=(13, 13))
   plt.subplot(231)
   plt.title(f'original_image -predicted as {cat}')
   plt.imshow(image)

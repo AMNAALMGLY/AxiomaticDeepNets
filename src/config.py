@@ -7,7 +7,7 @@ args = Namespace(
     model = 'googlenet',
     
     # path to input and output image files 
-   input_image = "/content/drive/MyDrive/AxiomiticDeepNets/Images/a12.jpg",
+   input_image = "/content/drive/MyDrive/AxiomiticDeepNets/Images/a13.jpeg",
    output_result = "/content/drive/MyDrive/AxiomiticDeepNets/results/",
 
     
@@ -23,7 +23,7 @@ args = Namespace(
     
 
     # parameter for the Integrated Gradient
-    n_steps = 500,
+    n_steps = 300,
 
     # parameters for the dataset
     classesFile='/content/drive/MyDrive/AxiomiticDeepNets/imagenet_classes.txt',
