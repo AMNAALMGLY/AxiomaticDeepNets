@@ -7,7 +7,7 @@ args = Namespace(
     model = 'googlenet',
     
     # path to input and output image files 
-   input_image = "/content/drive/MyDrive/AxiomiticDeepNets/Images/a13.jpeg",
+   input_image = "/content/drive/MyDrive/AxiomiticDeepNets/Images/dog.jpg",
    output_result = "/content/drive/MyDrive/AxiomiticDeepNets/results/",
 
     
