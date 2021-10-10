@@ -14,6 +14,8 @@ from torchvision import transforms, utils
 # Ignore warnings
 import warnings
 warnings.filterwarnings("ignore")
+device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def predict(input, model,classesFile='imagenet_classes.txt',transform=True):
     '''
     input is an image
@@ -46,3 +48,14 @@ def predict(input, model,classesFile='imagenet_classes.txt',transform=True):
 
 
     return idx, categories[idx] , probmax
+
+
+def predictSentiment(onehot,model,textField):   
+    model.freeze=False
+    onehot=onehot.to(device)
+    onehot.unsqueeze_(1)
+    prediction = torch.sigmoid(model(onehot, lengthTensor)) > 0.5
+    if prediction:
+         return prediction ,'positive' 
+    else:
+          return prediction, 'negative'

@@ -34,34 +34,49 @@ def interpolate(baseline, input, steps,plot=False):
   return interpolates
 
 
-def computeGradiant(input,model,target_idx=None):
+
+def computeGradiant(input,model,target_idx=None,isText=False):
           gradient=torch.empty_like(input)
           input.requires_grad=True
         
           model.to(device)
 
-     
+         
           model.zero_grad()
+          
          
           input_batch = input.unsqueeze(0)
           
-          output=model(input_batch.to(device))
-          #find target if none is provided
-          prob=torch.nn.functional.softmax(output,dim=1)
+          if isText:
+              model.freeze=True
+              input_batch=input_batch.permute(1,0,2)
+
+              output=model(input_batch.to(device),text_lengths=lengthTensor)
           
-          if target_idx:
-            outputs=output[:,target_idx].squeeze(0)
+              output=torch.sigmoid(output)
+
           else:
-            outputs=output
+
           
-          
+              output=model(input_batch.to(device))
+              #find target if none is provided
+              prob=torch.nn.functional.softmax(output,dim=1)
+              
+              if target_idx:
+                outputs=output[:,target_idx].squeeze(0)
+              else:
+                outputs=output
+              
+   
           gradient=torch.autograd.grad(outputs=outputs,inputs= input_batch,)[0]
+          if isText:
+            gradient=gradient.permute(1,0,2)
           return gradient.squeeze_(0)
 
 
 #class model , n_steps , internal_batch_size , method
 #Methods : explain return attributions , parameters X , baseline , target
-def generate_IG(input, baseline,model,n_steps,target_idx):
+def generate_IG(input, baseline,model,n_steps,target_idx,isText):
   norm=input-baseline
   interpol=interpolate(baseline, input, n_steps)
   gradient=torch.empty(*interpol.shape)
@@ -72,15 +87,14 @@ def generate_IG(input, baseline,model,n_steps,target_idx):
 
 
 
-def explain(input_image,model,n_steps, target_idx,baseline=None,preprocess=True):
+def explain(input_image,model,n_steps, target_idx,isText,baseline=None,preprocess=True):
     if preprocess:
        input_image=transforms.Resize((224,224))(input_image)
     input_tensor=transforms.ToTensor()(input_image)
     if not  baseline==None:
         baseline=torch.zeros(*input_tensor.shape)
-    #baseline_preporcessed=preprocess(transforms.ToPILImage()(baseline))
-    #input_tensor_preprocessed = preprocess(input_image)
-    IG,grads=generate_IG(input_tensor,baseline,model,n_steps=n_steps,target_idx=target_idx)
+   
+    IG,grads=generate_IG(input_tensor,baseline,model,n_steps=n_steps,target_idx=target_idx,isText=isText)
     return IG,grads
 
 

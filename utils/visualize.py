@@ -41,3 +41,29 @@ def visualize(baseline, image,grads, IG,cat,fname,cmap='PiYG',alpha=0.4):
   plt.tight_layout()
   return fig
 
+
+
+def  hlstr(string, color='white'):
+    """
+    Return HTML markup highlighting text with the desired color.
+    """
+    return f"<mark style=background-color:{color}>{string} </mark>"
+def colorize(attrs, cmap='PiYG'):
+    """
+    Compute hex colors based on the attributions for a single instance.
+    Uses a diverging colorscale by default and normalizes and scales
+    the colormap so that colors are consistent with the attributions.
+    """
+ 
+    cmap_bound = np.abs(attrs).max()
+    norm = mpl.colors.Normalize(vmin=-cmap_bound, vmax=cmap_bound)
+    cmap = mpl.cm.get_cmap(cmap)
+
+    # now compute hex values of colors
+    colors = list(map(lambda x: mpl.colors.rgb2hex(cmap(norm(x))), attrs))
+    return colors
+
+def visualizeText(IG,tokens):
+  colors = colorize(IG.detach().cpu().numpy())
+  HTML("".join(list(map(hlstr, tokens, colors))))
+
