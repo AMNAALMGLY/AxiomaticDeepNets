@@ -43,7 +43,4 @@ python main.py
 ```
 
 ### TODO
-
-1. Improve the text Interpretability and convert the notebook to script
-
-2. Improve documentation
+1. Improve documentation
