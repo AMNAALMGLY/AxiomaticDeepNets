@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 args = Namespace(
     #experiment
-    experiment='text',
+    experiment='image',
     
     #model
     model = 'googlenet',
