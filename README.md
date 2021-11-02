@@ -15,7 +15,7 @@ Major modules implemented in the code
 ### Process your Experiment(the image / text ) you want to explain as follows:
 
 - upload your image in the /Images folder
-- edit your config file with the path of the image
+- edit your config file with the path of the image ,result to be saved, pretrained model path and imagenet classes.txt in case of images
 - run the main.py file 
 - results are saved in the results folder representing visualizaion of : baseline , original image , gradient and Integrated Image, Overlay the image with IG
 
