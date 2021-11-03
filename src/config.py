@@ -5,14 +5,14 @@ import torch
 import torch.nn as nn
 args = Namespace(
     #experiment
-    experiment='image',
+    experiment='text',  #['image' ,'text']
     
     #model
     model = 'googlenet',
     
     # path to input and output image files 
-   input_image = "/content/drive/MyDrive/AxiomiticDeepNets/Images/dog.jpg",
-   output_result = "/content/drive/MyDrive/AxiomiticDeepNets/results/",
+   input_image = "./Images/dog.jpg",
+   output_result = "./results/",
 
     #input sentence and embedding vector
     input_sent='I love this movie',
@@ -35,7 +35,7 @@ args = Namespace(
     n_steps = 300,
 
     # parameters for the dataset
-    classesFile='/content/drive/MyDrive/AxiomiticDeepNets/imagenet_classes.txt',
+    classesFile='./imagenet_classes.txt',
     batch_size = 64, 
     num_workers = 8,
     
@@ -50,7 +50,7 @@ args = Namespace(
     num_epochs = 5, 
     no_of_gpus = 4,
     seed = 1234, # 4 different seeds used
-    model_path = '/content/drive/MyDrive/AxiomiticDeepNets/models',
+    model_path = './models',
    
 )
 
